@@ -13,7 +13,7 @@ class App extends React.Component {
     cardImage: '',
     cardRare: '',
     cardTrunfo: false,
-    isSaveButtonDisabled: true,
+    isSaveButtonDisabled: false,
   };
 
   mudarEstado = ({ target }) => {
@@ -40,6 +40,7 @@ class App extends React.Component {
           cardTrunfo={ cardTrunfo }
           isSaveButtonDisabled={ isSaveButtonDisabled }
           onInputChange={ this.mudarEstado }
+          onClick={ () => this.setState({ isSaveButtonDisabled: true }) }
         />
         <Card
           cardName={ cardName }
