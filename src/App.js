@@ -76,7 +76,8 @@ class App extends React.Component {
 
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
-      cardImage, cardRare, cardTrunfo, isSaveButtonDisabled, hasTrunfo } = this.state;
+      cardImage, cardRare, cardTrunfo, isSaveButtonDisabled, hasTrunfo,
+      baralho } = this.state;
     return (
       <div>
         <h1>Tryunfo</h1>
@@ -104,6 +105,22 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
         />
+        <div className="todasAsCartas">
+          <h1>Todas as Cartas:</h1>
+          {
+            baralho.map((carta) => (<Card
+              key={ carta.cardName }
+              cardName={ carta.cardName }
+              cardDescription={ carta.cardDescription }
+              cardAttr1={ carta.cardAttr1 }
+              cardAttr2={ carta.cardAttr2 }
+              cardAttr3={ carta.cardAttr3 }
+              cardImage={ carta.cardImage }
+              cardRare={ carta.cardRare }
+              cardTrunfo={ carta.cardTrunfo }
+            />))
+          }
+        </div>
       </div>
     );
   }
