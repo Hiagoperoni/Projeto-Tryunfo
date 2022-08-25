@@ -80,6 +80,10 @@ class App extends React.Component {
     }
   };
 
+  excluirCarta = (event) => {
+    console.log(event.target.key);
+  };
+
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, isSaveButtonDisabled, hasTrunfo,
@@ -113,6 +117,10 @@ class App extends React.Component {
         />
         <div className="todasAsCartas">
           <h1>Todas as Cartas:</h1>
+          <label htmlFor="filtroCartas">
+            Filtrar Cartas:
+            <input type="text" name="filtroCartas" onChange={ this.mudarEstado.value } />
+          </label>
           {
             baralho.map((carta) => (
               <div key={ carta.cardName } className="cartasSalvas">
@@ -127,7 +135,7 @@ class App extends React.Component {
                   cardRare={ carta.cardRare }
                   cardTrunfo={ carta.cardTrunfo }
                 />
-                <button type="button">Excluir</button>
+                <button type="button" onClick={ this.excluirCarta }>Excluir</button>
               </div>))
           }
         </div>
