@@ -20,27 +20,33 @@ class App extends React.Component {
 
   mudarEstado = ({ target }) => {
     const { name, value } = target;
-    const { cardName, cardDescription,
-      cardImage, cardRare, cardAttr1, cardAttr2, cardAttr3 } = this.state;
-    const valorMaximoSoma = 210;
-    const valorMaximo = 90;
-    const valorMinimo = 0;
     this.setState({
       [name]: value,
     }, () => {
-      if (cardName !== ''
-      && cardDescription !== '' && cardImage !== '' && cardRare !== ''
-      && (Number(cardAttr1) + Number(cardAttr2) + Number(cardAttr3) <= valorMaximoSoma)
-      && Number(cardAttr1) >= valorMinimo && Number(cardAttr1) <= valorMaximo
-      && cardAttr1 !== ''
-      && (Number(cardAttr2) >= valorMinimo) && (Number(cardAttr2) <= valorMaximo)
-      && cardAttr2 !== ''
-      && Number(cardAttr3) >= valorMinimo && Number(cardAttr2) <= valorMaximo
-      && cardAttr3 !== '') {
-        this.setState({ isSaveButtonDisabled: false });
-      } else {
-        this.setState({ isSaveButtonDisabled: true });
-      }
+      this.handleButtonDisable();
+    });
+  };
+
+  handleButtonDisable = () => {
+    const { cardName, cardDescription,
+      cardImage, cardAttr1, cardAttr2, cardAttr3 } = this.state;
+    const valorMaximoSoma = 210;
+    const valorMaximo = 90;
+    const valorMinimo = 0;
+    const validarStrings = cardName.length > 0 && cardDescription.length > 0
+      && cardImage.length > 0;
+    const somaDosAttr = Number(cardAttr1) + Number(cardAttr2) + Number(cardAttr3);
+    const validarSoma = somaDosAttr <= valorMaximoSoma;
+    const validarMaxMinAttr1 = Number(cardAttr1) >= valorMinimo
+      && Number(cardAttr1) <= valorMaximo;
+    const validarMaxMinAttr2 = Number(cardAttr2) >= valorMinimo
+      && Number(cardAttr2) <= valorMaximo;
+    const validarMaxMinAttr3 = Number(cardAttr3) >= valorMinimo
+      && Number(cardAttr3) <= valorMaximo;
+    const verificacaoTotal = validarStrings && validarSoma && validarMaxMinAttr1
+      && validarMaxMinAttr2 && validarMaxMinAttr3;
+    this.setState({
+      isSaveButtonDisabled: !verificacaoTotal,
     });
   };
 
@@ -108,17 +114,21 @@ class App extends React.Component {
         <div className="todasAsCartas">
           <h1>Todas as Cartas:</h1>
           {
-            baralho.map((carta) => (<Card
-              key={ carta.cardName }
-              cardName={ carta.cardName }
-              cardDescription={ carta.cardDescription }
-              cardAttr1={ carta.cardAttr1 }
-              cardAttr2={ carta.cardAttr2 }
-              cardAttr3={ carta.cardAttr3 }
-              cardImage={ carta.cardImage }
-              cardRare={ carta.cardRare }
-              cardTrunfo={ carta.cardTrunfo }
-            />))
+            baralho.map((carta) => (
+              <div key={ carta.cardName } className="cartasSalvas">
+                <Card
+                  key={ carta.cardName }
+                  cardName={ carta.cardName }
+                  cardDescription={ carta.cardDescription }
+                  cardAttr1={ carta.cardAttr1 }
+                  cardAttr2={ carta.cardAttr2 }
+                  cardAttr3={ carta.cardAttr3 }
+                  cardImage={ carta.cardImage }
+                  cardRare={ carta.cardRare }
+                  cardTrunfo={ carta.cardTrunfo }
+                />
+                <button type="button">Excluir</button>
+              </div>))
           }
         </div>
       </div>
